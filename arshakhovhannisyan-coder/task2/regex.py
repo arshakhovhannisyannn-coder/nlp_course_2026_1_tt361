@@ -35,10 +35,8 @@ print("\nԽնդիր 4")
 
 text = "The the quick brown fox jumps over the the lazy dog."
 
-repeated_words = re.findall(r'\b(\w+)\s+\1\b', text, re.IGNORECASE)
-
-for word in repeated_words:
-    print(word)
+for match in re.finditer(r'\b(\w+)\s+\1\b', text, re.IGNORECASE):
+    print(match.group(0))
 
 
 print("\nԽնդիր 5")
