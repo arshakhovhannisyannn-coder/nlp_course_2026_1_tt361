@@ -63,13 +63,15 @@ class Preprocessor:
         stemmed_text = []
 
         for token in tokens:
-            if token.endswith("ing"):
-                token = token[:-3]
-            elif token.endswith("ed"):
-                token = token[:-2]
-            elif token.endswith("ly"):
-                token = token[:-2]
-            elif token.endswith("s") and len(token) > 3:
+            if len(token) > 5:
+                if token.endswith("ing"):
+                    token = token[:-3]
+                elif token.endswith("ed"):
+                    token = token[:-2]
+                elif token.endswith("ly"):
+                    token = token[:-2]
+
+            if token.endswith("s") and len(token) > 3:
                 token = token[:-1]
 
             stemmed_text.append(token)
@@ -80,7 +82,7 @@ class Preprocessor:
         if text is None:
             text = self.text
 
-        tokens = self.stemming(text)
+        tokens = self.remove_stopwords(text)
 
         lemmatization_vocab = {
             "used": "use",
@@ -104,7 +106,7 @@ if __name__ == "__main__":
     removed_punctuation_text = text_preprocessor.remove_punctuation(lowcased_text)
     removed_stopwords_text = text_preprocessor.remove_stopwords(removed_punctuation_text)
     stemmed_text = text_preprocessor.stemming(removed_stopwords_text)
-    lemmatized_text = text_preprocessor.lemmatization(stemmed_text)
+    lemmatized_text = text_preprocessor.lemmatization(removed_stopwords_text)
 
     print("Քայլ 1")
     print(tokenized_text)
